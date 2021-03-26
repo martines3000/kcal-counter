@@ -44,3 +44,21 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+---
+
+# Storybook
+
+Helps you build UI components in isolation from your app's business logic, data, and context. That makes it easy to develop hard-to-reach states. Save these UI states as stories to revisit during development, testing, or QA.
+
+### `yarn storybook`
+
+Runs storybook.
+
+### `src/stories`
+
+Stories folder.
+
+### `.storybook`
+
+Global storybook configuration files.
