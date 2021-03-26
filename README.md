@@ -82,4 +82,5 @@ Lints all files and fixes autofixable problems.
 ## Commitizen
 
 1. To commit something to the repo first create a new branch (patch-%the number of PRs you've already made% &rarr; patch-6)
-2. Run `yarn commit` and follow the instructions
+2. Add all changes you made with &rarr; `git add ...`
+3. Run `yarn commit` and follow the instructions
