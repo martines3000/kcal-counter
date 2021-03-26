@@ -23,8 +23,10 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx --quiet",
+    "lint:fix": "eslint . --fix --ext .js,.jsx,.ts,.tsx --quiet",
     "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "commit": "cz"
   },
   "eslintConfig": {
     "extends": [
@@ -52,6 +54,7 @@
     "@storybook/preset-create-react-app": "^3.1.7",
     "@storybook/react": "^6.1.21",
     "@typescript-eslint/eslint-plugin": "^4.19.0",
+    "cz-conventional-changelog": "3.3.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jest": "^24.3.2",
@@ -60,5 +63,10 @@
     "eslint-plugin-react": "^7.22.0",
     "prettier": "^2.2.1",
     "prettier-eslint": "^12.0.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }

@@ -62,3 +62,24 @@ Stories folder.
 ### `.storybook`
 
 Global storybook configuration files.
+
+---
+
+# Other project info
+
+## Formatting and linting
+
+The project uses Prettier and ESLint. If you are using vscode you can install the matching extensions and use format on save.
+
+### `yarn lint`
+
+Lints all files.
+
+### `yarn lint:fix`
+
+Lints all files and fixes autofixable problems.
+
+## Commitizen
+
+1. To commit something to the repo first create a new branch (patch-%the number of PRs you've already made% &rarr; patch-6)
+2. Run `yarn commit` and follow the instructions
