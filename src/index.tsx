@@ -3,11 +3,17 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import ThemeProvider from './contexts/ThemeContext';
+import AuthProvider from './contexts/AuthContext';
+import { CssBaseline } from '@material-ui/core';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <ThemeProvider>
+    <AuthProvider>
+      <CssBaseline />
+      <App />
+    </AuthProvider>
+  </ThemeProvider>,
   document.getElementById('root'),
 );
 
