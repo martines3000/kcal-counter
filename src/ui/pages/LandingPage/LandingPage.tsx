@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Login from '../../ui/Login';
-import Register from '../../ui/Register';
+import Login from '../../organisms/Login/Login';
+import Register from '../../organisms/Register/Register';
 
 const LandingPage = (): JSX.Element => {
   const [action, setAction] = useState(false);

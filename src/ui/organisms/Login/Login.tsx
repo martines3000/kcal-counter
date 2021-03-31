@@ -3,8 +3,8 @@ import { Formik, Form, Field } from 'formik';
 import { Box, Link } from '@material-ui/core';
 import { TextField } from 'formik-material-ui';
 import { Redirect } from 'react-router';
-import { useAuth } from '../contexts/AuthContext';
-import LoadingButton from './LoadingButton';
+import { useAuth } from '../../../contexts/AuthContext';
+import LoadingButton from '../../atoms/LoadingButton/LoadingButton';
 
 export type LoginProps = {
   toggleAction: () => void;

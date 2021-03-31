@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import LandingPage from './pages/LandingPage';
-import Dashboard from './pages/Dashboard';
-import Profile from './pages/Profile';
+import LandingPage from './ui/pages/LandingPage/LandingPage';
+import Dashboard from './ui/pages/Dashboard/Dashboard';
+import Profile from './ui/pages/Profile/Profile';
 import PrivateRoute from './ui/PrivateRoute';
 import Navbar from './ui/Navbar';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Story } from '@storybook/react';
 
-import LoadingButton, { LoadingButtonProps } from '../ui/LoadingButton';
+import LoadingButton, { LoadingButtonProps } from './LoadingButton';
 
 export default {
   component: LoadingButton,

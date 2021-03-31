@@ -1,9 +1,9 @@
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
-import { Button, Box, Link } from '@material-ui/core';
+import { Box, Link } from '@material-ui/core';
 import { TextField } from 'formik-material-ui';
-import { useAuth } from '../contexts/AuthContext';
-import LoadingButton from './LoadingButton';
+import { useAuth } from '../../../contexts/AuthContext';
+import LoadingButton from '../../atoms/LoadingButton/LoadingButton';
 
 export type RegisterProps = {
   toggleAction: () => void;

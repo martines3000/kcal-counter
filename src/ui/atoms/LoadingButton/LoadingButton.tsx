@@ -7,7 +7,7 @@ export type LoadingButtonProps = ButtonProps & {
 };
 
 const LoadingButton = ({ loading, ...rest }: LoadingButtonProps): JSX.Element => {
-  return <Button {...rest}>{loading ? <PulseLoader size='8' color='white' /> : rest.children}</Button>;
+  return <Button {...rest}>{loading ? <PulseLoader size='8px' color='white' /> : rest.children}</Button>;
 };
 
 export default LoadingButton;

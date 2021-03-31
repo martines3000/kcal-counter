@@ -1,13 +1,13 @@
 import React from 'react';
 import { Story } from '@storybook/react';
 
-import Navbar from '../ui/Navbar';
+import Footer from './Footer';
 
 export default {
-  component: Navbar,
-  title: 'components/Navbar',
+  component: Footer,
+  title: 'components/Footer',
 };
 
-const Template: Story = () => <Navbar />;
+const Template: Story = () => <Footer />;
 
 export const Default = Template.bind({});

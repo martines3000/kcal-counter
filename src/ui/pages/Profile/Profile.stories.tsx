@@ -1,13 +1,13 @@
 import React from 'react';
 import { Story } from '@storybook/react';
 
-import Footer from '../ui/Footer';
+import Profile from './Profile';
 
 export default {
-  component: Footer,
-  title: 'components/Footer',
+  component: Profile,
+  title: 'pages/Profile',
 };
 
-const Template: Story = () => <Footer />;
+const Template: Story = () => <Profile />;
 
 export const Default = Template.bind({});
