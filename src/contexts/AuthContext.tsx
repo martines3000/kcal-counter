@@ -1,32 +1,36 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from 'react';
 import { RotateLoader } from 'react-spinners';
 import { API_ADDRESS } from '../config';
 import axios from 'axios';
+import jwt_decode from 'jwt-decode';
 
 type AuthProviderProps = {
   children?: React.ReactNode;
 };
 
-interface IRegister {
+type IRegister = {
   firstName: string;
   lastName: string;
   username: string;
   email: string;
   password: string;
-}
+};
 
-interface ILogin {
+type ILogin = {
   username: string;
   password: string;
-}
+};
 
-interface IUser {
+type Permission = 'PROFILE_PERMISSION' | 'PERSONAL_FOODS_PERMISSION';
+
+type IUser = {
   username: string;
   name: string;
   id: string;
-  permissions: never[];
+  permissions: Permission[];
   token: string;
-}
+};
 
 const initialUserInfo = {
   username: '',
@@ -36,7 +40,7 @@ const initialUserInfo = {
   token: '',
 };
 
-interface IAuthContext {
+type IAuthContext = {
   isAuthenticated: boolean;
   currentUser: IUser;
   loading: boolean;
@@ -44,7 +48,8 @@ interface IAuthContext {
   register: (data: IRegister) => void;
   login: (data: ILogin) => void;
   logout: () => void;
-}
+  gotValidToken: () => boolean;
+};
 
 const AuthContext = React.createContext<IAuthContext>({
   isAuthenticated: false,
@@ -59,6 +64,9 @@ const AuthContext = React.createContext<IAuthContext>({
   },
   logout: () => {
     return;
+  },
+  gotValidToken: () => {
+    return false;
   },
 });
 
@@ -76,7 +84,7 @@ const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
     setLoading(true);
     axios({ method: 'post', url: `${API_ADDRESS}/register`, data: data })
       .then((res) => {
-        return;
+        console.log(res);
       })
       .catch((err) => setError(err.response.data.message))
       .then(() => setLoading(false));
@@ -85,40 +93,75 @@ const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
     setLoading(true);
     axios({ method: 'post', url: `${API_ADDRESS}/authenticate`, data: data })
       .then((res) => {
-        // TODO: FINISH
-        console.log(res);
+        const { id, name, permissions, token, username } = res.data;
+        localStorage.setItem('token', token);
+        setCurrentUser({
+          id: id,
+          name: name,
+          permissions: permissions,
+          token: token,
+          username: username,
+        });
       })
       .catch((err) => {
-        console.log(err);
-        //setError(err.response.data.message);
+        if (err.response) {
+          setError(err.response.data.message);
+        } else {
+          setError('Unknown error occurred!');
+        }
       })
       .then(() => {
-        setCurrentUser({
-          username: 'martines3000',
-          name: 'Martin Domajnko',
-          id: 'id123id123id123',
-          token: 'dflksmgklsdfmgkslodnmgkJWTJWT',
-          permissions: [],
-        });
         setIsAuthenticated(true);
         setLoading(false);
       });
   }
   function logout(): void {
     setLoading(true);
-    axios({ method: 'delete', url: `${API_ADDRESS}/session/destory`, headers: { Authorization: '' } })
-      .then((res) => {
-        console.log(res);
-      })
+    axios({ method: 'delete', url: `${API_ADDRESS}/session/destroy`, headers: { Authorization: `Bearer ${currentUser.token}` } })
       .catch((err) => setError(err))
       .then(() => {
+        localStorage.removeItem('token');
         setIsAuthenticated(false);
         setLoading(false);
       });
   }
 
+  function profile(token: string): void {
+    setLoading(true);
+    axios({ method: 'get', url: `${API_ADDRESS}/profile`, headers: { Authorization: `Bearer ${token}` } })
+      .then((res) => {
+        const { firstName, lastName, id, permissions, username } = res.data;
+        setCurrentUser({
+          id: id,
+          name: firstName + ' ' + lastName,
+          username: username,
+          permissions: permissions,
+          token: token,
+        });
+        setIsAuthenticated(true);
+      })
+      .catch((err) => setError(err))
+      .then(() => {
+        setLoading(false);
+      });
+  }
+
+  function checkIfTokenValid(token: string): boolean {
+    if (new Date().getTime() / 1000 > parseInt(jwt_decode<{ exp: string; iat: string; sub: string }>(token).exp)) return false;
+    return true;
+  }
+
+  function gotValidToken(): boolean {
+    const token = localStorage.getItem('token');
+    if (token && checkIfTokenValid(token)) {
+      profile(token);
+      return true;
+    }
+    return false;
+  }
+
   useEffect(() => {
-    // TODO: Check if JWT still valid and set isAuthenticated to true
+    gotValidToken();
   }, []);
 
   const value = {
@@ -129,6 +172,7 @@ const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
     register: register,
     login: login,
     logout: logout,
+    gotValidToken: gotValidToken,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

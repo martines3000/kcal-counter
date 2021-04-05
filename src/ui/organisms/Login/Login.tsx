@@ -11,7 +11,7 @@ export type LoginProps = {
 };
 
 const Login = ({ toggleAction }: LoginProps): JSX.Element => {
-  const { login, loading, isAuthenticated } = useAuth();
+  const { login, loading, isAuthenticated, error } = useAuth();
   if (isAuthenticated) return <Redirect to='/dashboard' />;
 
   return (

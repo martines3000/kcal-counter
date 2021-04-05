@@ -5,7 +5,7 @@ import MacroNumbers, { MacroNumbersProps } from './MacroNumbers';
 
 export default {
   component: MacroNumbers,
-  title: 'components/MacroCounter',
+  title: 'components/MacroNumbers',
 };
 
 const Template: Story<MacroNumbersProps> = (args) => {

@@ -5,8 +5,10 @@ import Dashboard from './ui/pages/Dashboard/Dashboard';
 import Profile from './ui/pages/Profile/Profile';
 import PrivateRoute from './ui/PrivateRoute';
 import Navbar from './ui/Navbar';
+import { useAuth } from './contexts/AuthContext';
 
 function App(): JSX.Element {
+  useAuth();
   return (
     <Router basename={process.env.PUBLIC_URL}>
       <Switch>
