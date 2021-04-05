@@ -102,6 +102,7 @@ const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
           token: token,
           username: username,
         });
+        setIsAuthenticated(true);
       })
       .catch((err) => {
         if (err.response) {
@@ -111,7 +112,6 @@ const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
         }
       })
       .then(() => {
-        setIsAuthenticated(true);
         setLoading(false);
       });
   }

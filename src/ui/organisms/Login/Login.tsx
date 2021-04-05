@@ -5,10 +5,16 @@ import { TextField } from 'formik-material-ui';
 import { Redirect } from 'react-router';
 import { useAuth } from '../../../contexts/AuthContext';
 import LoadingButton from '../../atoms/LoadingButton/LoadingButton';
+import * as Yup from 'yup';
 
 export type LoginProps = {
   toggleAction: () => void;
 };
+
+const LoginSchema = Yup.object().shape({
+  username: Yup.string().required(),
+  password: Yup.string().required(),
+});
 
 const Login = ({ toggleAction }: LoginProps): JSX.Element => {
   const { login, loading, isAuthenticated, error } = useAuth();
@@ -20,16 +26,18 @@ const Login = ({ toggleAction }: LoginProps): JSX.Element => {
         username: '',
         password: '',
       }}
+      validationSchema={LoginSchema}
       onSubmit={(values, { setSubmitting }) => {
         login(values);
         setSubmitting(false);
         // TODO: FIX -> Button doesn't get disabled
       }}
     >
-      {({ submitForm, isSubmitting }) => (
+      {({ submitForm, isSubmitting, errors }) => (
         <Form>
+          {console.log(errors.username)}
           <Box margin={1}>
-            <Field name='username' type='text' label='Username' component={TextField} />
+            <Field name='username' type='text' label='Username' component={TextField} error={errors.username} />
           </Box>
           <Box margin={1}>
             <Field name='password' type='password' label='Password' component={TextField} />

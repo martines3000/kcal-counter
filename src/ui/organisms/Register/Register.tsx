@@ -4,10 +4,22 @@ import { Box, Link } from '@material-ui/core';
 import { TextField } from 'formik-material-ui';
 import { useAuth } from '../../../contexts/AuthContext';
 import LoadingButton from '../../atoms/LoadingButton/LoadingButton';
+import * as Yup from 'yup';
 
 export type RegisterProps = {
   toggleAction: () => void;
 };
+
+const RegisterSchema = Yup.object().shape({
+  firstName: Yup.string().min(2, 'Too short!').max(50, 'Too long!').required(),
+  lastName: Yup.string().min(2, 'Too short!').max(50, 'Too long!').required(),
+  username: Yup.string().min(5, 'Too short!').max(50, 'Too long!').required(),
+  email: Yup.string().email('Invalid email').required(),
+  password: Yup.string().min(12, 'Too short!').max(100, 'Too long!').required(),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref('password'), null], 'Passwords must match')
+    .required(),
+});
 
 const Register = ({ toggleAction }: RegisterProps): JSX.Element => {
   const { register, loading, error } = useAuth();
@@ -21,6 +33,7 @@ const Register = ({ toggleAction }: RegisterProps): JSX.Element => {
         password: '',
         confirmPassword: '',
       }}
+      validationSchema={RegisterSchema}
       onSubmit={(values, { setSubmitting }) => {
         register({
           firstName: values.firstName,
