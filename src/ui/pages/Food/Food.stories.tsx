@@ -1,13 +1,13 @@
 import React from 'react';
 import { Story } from '@storybook/react';
 
-import Footer from './Footer';
+import Food from './Food';
 
 export default {
-  component: Footer,
-  title: 'organisms/Footer',
+  component: Food,
+  title: 'pages/Food',
 };
 
-const Template: Story = () => <Footer />;
+const Template: Story = () => <Food />;
 
 export const Default = Template.bind({});

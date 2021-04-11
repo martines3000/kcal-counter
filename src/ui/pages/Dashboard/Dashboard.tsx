@@ -1,9 +1,10 @@
 import React from 'react';
+import MacroCounter from '../../organisms/MacroCounter/MacroCounter';
 
 const Dashboard = (): JSX.Element => {
   return (
     <div>
-      <h1>Dashboard page</h1>
+      <MacroCounter />
     </div>
   );
 };

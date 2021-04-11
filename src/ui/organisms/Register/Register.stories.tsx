@@ -5,7 +5,7 @@ import Register, { RegisterProps } from './Register';
 
 export default {
   component: Register,
-  title: 'forms/Register',
+  title: 'organisms/Register',
 };
 
 const Template: Story<RegisterProps> = (args) => <Register {...args} />;

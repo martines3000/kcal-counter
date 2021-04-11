@@ -5,7 +5,7 @@ import LoadingButton, { LoadingButtonProps } from './LoadingButton';
 
 export default {
   component: LoadingButton,
-  title: 'components/LoadingButton',
+  title: 'atoms/LoadingButton',
 };
 
 const Template: Story<LoadingButtonProps> = (args) => <LoadingButton {...args}>Test</LoadingButton>;

@@ -5,7 +5,7 @@ import MacroCounter from './MacroCounter';
 
 export default {
   component: MacroCounter,
-  title: 'components/MacroCounter',
+  title: 'organisms/MacroCounter',
 };
 
 const Template: Story = () => {

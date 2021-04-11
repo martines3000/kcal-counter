@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppBar, Toolbar, IconButton, Typography, makeStyles, PaletteType, Switch } from '@material-ui/core';
+import { AppBar, Toolbar, IconButton, Typography, makeStyles, PaletteType, Switch, Button } from '@material-ui/core';
 import LoadingButton from '../../atoms/LoadingButton/LoadingButton';
 import FastFoodIcon from '@material-ui/icons/Fastfood';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -11,6 +11,7 @@ export type TopAppBarProps = {
   type: PaletteType;
   handleLogoClick: () => void;
   handleProfileClick: () => void;
+  handleFoodClick: () => void;
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -20,6 +21,9 @@ const useStyles = makeStyles((theme) => ({
     color: 'inherit',
   },
   title: {
+    marginRight: 20,
+  },
+  filler: {
     flexGrow: 1,
   },
   icon: {
@@ -31,7 +35,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TopAppBar = ({ loading, logout, toggleTheme, type, handleLogoClick, handleProfileClick }: TopAppBarProps): JSX.Element => {
+const TopAppBar = ({
+  loading,
+  logout,
+  toggleTheme,
+  type,
+  handleLogoClick,
+  handleProfileClick,
+  handleFoodClick,
+}: TopAppBarProps): JSX.Element => {
   const classes = useStyles();
 
   return (
@@ -43,6 +55,10 @@ const TopAppBar = ({ loading, logout, toggleTheme, type, handleLogoClick, handle
         <Typography className={classes.title} variant='h6'>
           KCAL-COUNTER
         </Typography>
+        <Button variant='text' color='inherit' onClick={handleFoodClick}>
+          Food
+        </Button>
+        <div className={classes.filler} />
         <Switch className={classes.switchToggle} checked={type === 'light'} onChange={toggleTheme} />
         <IconButton className={classes.menuButton} onClick={handleProfileClick}>
           <AccountCircleIcon className={classes.icon} />

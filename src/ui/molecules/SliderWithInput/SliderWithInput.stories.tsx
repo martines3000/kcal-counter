@@ -5,7 +5,7 @@ import SliderWithInput, { SliderWithInputProps } from './SliderWithInput';
 
 export default {
   component: SliderWithInput,
-  title: 'components/SliderWithInput',
+  title: 'molecules/SliderWithInput',
 };
 
 const Template: Story<SliderWithInputProps> = (args) => {

@@ -1,9 +1,9 @@
 import React from 'react';
-import { useAuth } from '../contexts/AuthContext';
-import { useThemeUpdate } from '../contexts/ThemeContext';
+import { useAuth } from '../../../contexts/AuthContext';
+import { useThemeUpdate } from '../../../contexts/ThemeContext';
 import { useTheme } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-import TopAppBar from './organisms/TopAppBar/TopAppBar';
+import TopAppBar from '../TopAppBar/TopAppBar';
 
 const Navbar = (): JSX.Element => {
   const history = useHistory();
@@ -21,6 +21,10 @@ const Navbar = (): JSX.Element => {
     history.push('/profile');
   };
 
+  const handleFoodClick = (): void => {
+    history.push('/food');
+  };
+
   // All functions need to come as props so we can setup storybook without crashing everything
   return (
     <TopAppBar
@@ -28,6 +32,7 @@ const Navbar = (): JSX.Element => {
       logout={logout}
       handleLogoClick={handleLogoClick}
       handleProfileClick={handleProfileClick}
+      handleFoodClick={handleFoodClick}
       toggleTheme={toggleTheme}
       type={type}
     />

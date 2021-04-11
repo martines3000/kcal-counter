@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from 'react';
-import { RotateLoader } from 'react-spinners';
 import { API_ADDRESS } from '../config';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
+import { usePublicFood } from './PublicFoodContext';
 
 type AuthProviderProps = {
   children?: React.ReactNode;
@@ -24,7 +24,7 @@ type ILogin = {
 
 type Permission = 'PROFILE_PERMISSION' | 'PERSONAL_FOODS_PERMISSION';
 
-type IUser = {
+export type IUser = {
   username: string;
   name: string;
   id: string;
@@ -41,18 +41,17 @@ const initialUserInfo = {
 };
 
 type IAuthContext = {
-  isAuthenticated: boolean;
+  isAuthenticated: boolean | null;
   currentUser: IUser;
   loading: boolean;
   error: string;
   register: (data: IRegister) => void;
   login: (data: ILogin) => void;
   logout: () => void;
-  gotValidToken: () => boolean;
 };
 
 const AuthContext = React.createContext<IAuthContext>({
-  isAuthenticated: false,
+  isAuthenticated: null,
   currentUser: initialUserInfo,
   loading: false,
   error: '',
@@ -65,9 +64,6 @@ const AuthContext = React.createContext<IAuthContext>({
   logout: () => {
     return;
   },
-  gotValidToken: () => {
-    return false;
-  },
 });
 
 export function useAuth(): IAuthContext {
@@ -76,9 +72,10 @@ export function useAuth(): IAuthContext {
 
 const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
   const [currentUser, setCurrentUser] = useState<IUser>(initialUserInfo);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const { loadFood } = usePublicFood();
 
   function register(data: IRegister): void {
     setLoading(true);
@@ -94,6 +91,7 @@ const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
     axios({ method: 'post', url: `${API_ADDRESS}/authenticate`, data: data })
       .then((res) => {
         const { id, name, permissions, token, username } = res.data;
+        console.log(token);
         localStorage.setItem('token', token);
         setCurrentUser({
           id: id,
@@ -102,6 +100,7 @@ const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
           token: token,
           username: username,
         });
+        setIsAuthenticated(true);
       })
       .catch((err) => {
         if (err.response) {
@@ -109,9 +108,9 @@ const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
         } else {
           setError('Unknown error occurred!');
         }
+        setIsAuthenticated(false);
       })
       .then(() => {
-        setIsAuthenticated(true);
         setLoading(false);
       });
   }
@@ -140,29 +139,36 @@ const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
         });
         setIsAuthenticated(true);
       })
-      .catch((err) => setError(err))
+      .catch((err) => {
+        setError(err);
+        setIsAuthenticated(false);
+      })
       .then(() => {
         setLoading(false);
       });
   }
 
   function checkIfTokenValid(token: string): boolean {
-    if (new Date().getTime() / 1000 > parseInt(jwt_decode<{ exp: string; iat: string; sub: string }>(token).exp)) return false;
+    if (new Date().getTime() / 1000 > parseInt(jwt_decode<{ exp: string; iat: string; id: string }>(token).exp)) return false;
     return true;
   }
 
-  function gotValidToken(): boolean {
+  function gotValidToken(): void {
     const token = localStorage.getItem('token');
     if (token && checkIfTokenValid(token)) {
       profile(token);
-      return true;
+    } else {
+      setIsAuthenticated(false);
     }
-    return false;
   }
 
   useEffect(() => {
     gotValidToken();
   }, []);
+
+  useEffect(() => {
+    if (isAuthenticated) loadFood(currentUser);
+  }, [isAuthenticated]);
 
   const value = {
     isAuthenticated: isAuthenticated,
@@ -172,7 +178,6 @@ const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
     register: register,
     login: login,
     logout: logout,
-    gotValidToken: gotValidToken,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

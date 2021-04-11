@@ -6,13 +6,16 @@ import reportWebVitals from './reportWebVitals';
 import ThemeProvider from './contexts/ThemeContext';
 import AuthProvider from './contexts/AuthContext';
 import { CssBaseline } from '@material-ui/core';
+import PublicFoodProvider from './contexts/PublicFoodContext';
 
 ReactDOM.render(
   <ThemeProvider>
-    <AuthProvider>
-      <CssBaseline />
-      <App />
-    </AuthProvider>
+    <PublicFoodProvider>
+      <AuthProvider>
+        <CssBaseline />
+        <App />
+      </AuthProvider>
+    </PublicFoodProvider>
   </ThemeProvider>,
   document.getElementById('root'),
 );
