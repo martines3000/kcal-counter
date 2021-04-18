@@ -3,7 +3,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { API_ADDRESS } from '../config';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
-import { usePublicFood } from './PublicFoodContext';
+import { useFood } from './FoodContext';
+import { useHistory } from 'react-router';
 
 type AuthProviderProps = {
   children?: React.ReactNode;
@@ -15,6 +16,7 @@ type IRegister = {
   username: string;
   email: string;
   password: string;
+  toggleAction: () => void;
 };
 
 type ILogin = {
@@ -71,27 +73,34 @@ export function useAuth(): IAuthContext {
 }
 
 const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
+  const history = useHistory();
   const [currentUser, setCurrentUser] = useState<IUser>(initialUserInfo);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const { loadFood } = usePublicFood();
+  const { loadPublicFood, loadPersonalFood } = useFood();
 
   function register(data: IRegister): void {
     setLoading(true);
     axios({ method: 'post', url: `${API_ADDRESS}/register`, data: data })
       .then((res) => {
-        console.log(res);
+        setLoading(false);
+        data.toggleAction();
       })
-      .catch((err) => setError(err.response.data.message))
-      .then(() => setLoading(false));
+      .catch((err) => {
+        if (err.response) {
+          setError(err.response.data.message);
+        } else {
+          setError('Unknown error occurred');
+        }
+        setLoading(false);
+      });
   }
   function login(data: ILogin): void {
     setLoading(true);
     axios({ method: 'post', url: `${API_ADDRESS}/authenticate`, data: data })
       .then((res) => {
         const { id, name, permissions, token, username } = res.data;
-        console.log(token);
         localStorage.setItem('token', token);
         setCurrentUser({
           id: id,
@@ -117,7 +126,13 @@ const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
   function logout(): void {
     setLoading(true);
     axios({ method: 'delete', url: `${API_ADDRESS}/session/destroy`, headers: { Authorization: `Bearer ${currentUser.token}` } })
-      .catch((err) => setError(err))
+      .catch((err) => {
+        if (err.response) {
+          setError(err.response.data.message);
+        } else {
+          setError('Unknown error occurred');
+        }
+      })
       .then(() => {
         localStorage.removeItem('token');
         setIsAuthenticated(false);
@@ -140,7 +155,12 @@ const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
         setIsAuthenticated(true);
       })
       .catch((err) => {
-        setError(err);
+        if (err.response) {
+          setError(err.response.data.message);
+        } else {
+          setError('Unknown error occurred');
+        }
+        localStorage.clear();
         setIsAuthenticated(false);
       })
       .then(() => {
@@ -167,7 +187,10 @@ const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
   }, []);
 
   useEffect(() => {
-    if (isAuthenticated) loadFood(currentUser);
+    if (isAuthenticated) {
+      loadPersonalFood(currentUser);
+      loadPublicFood(currentUser);
+    }
   }, [isAuthenticated]);
 
   const value = {

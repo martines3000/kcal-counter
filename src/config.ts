@@ -1,1 +1,1 @@
-export const API_ADDRESS = 'http://sipv.gorecan.com:11111/api/v1';
+export const API_ADDRESS = 'https://sipv.gorecan.com:11111/api/v1';

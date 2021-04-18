@@ -25,6 +25,10 @@ const Navbar = (): JSX.Element => {
     history.push('/food');
   };
 
+  const handleIntakeClick = (): void => {
+    history.push('/intake');
+  };
+
   // All functions need to come as props so we can setup storybook without crashing everything
   return (
     <TopAppBar
@@ -33,6 +37,7 @@ const Navbar = (): JSX.Element => {
       handleLogoClick={handleLogoClick}
       handleProfileClick={handleProfileClick}
       handleFoodClick={handleFoodClick}
+      handleIntakeClick={handleIntakeClick}
       toggleTheme={toggleTheme}
       type={type}
     />

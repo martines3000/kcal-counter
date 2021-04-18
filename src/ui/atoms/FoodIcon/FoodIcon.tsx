@@ -23,7 +23,7 @@ const FoodIcon = ({ foodType }: FoodIconProps): JSX.Element => {
       return <GiCakeSlice />;
     case 'SWEETS':
       return <GiWrappedSweet />;
-    case 'CARB':
+    case 'CARBS':
       return <GiSlicedBread />;
     default:
       return <GrChrome />;

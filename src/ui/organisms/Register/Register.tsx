@@ -41,9 +41,9 @@ const Register = ({ toggleAction }: RegisterProps): JSX.Element => {
           username: values.username,
           email: values.email,
           password: values.password,
+          toggleAction: toggleAction,
         });
         setSubmitting(false);
-        // TODO: FIX -> Button doesn't get disabled
       }}
     >
       {({ submitForm, isSubmitting }) => (
@@ -74,6 +74,7 @@ const Register = ({ toggleAction }: RegisterProps): JSX.Element => {
               I already have an account
             </Link>
           </Box>
+          <Box margin={1}>{error}</Box>
         </Form>
       )}
     </Formik>

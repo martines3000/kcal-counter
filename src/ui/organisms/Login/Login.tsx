@@ -30,14 +30,12 @@ const Login = ({ toggleAction }: LoginProps): JSX.Element => {
       onSubmit={(values, { setSubmitting }) => {
         login(values);
         setSubmitting(false);
-        // TODO: FIX -> Button doesn't get disabled
       }}
     >
       {({ submitForm, isSubmitting, errors }) => (
         <Form>
-          {console.log(errors.username)}
           <Box margin={1}>
-            <Field name='username' type='text' label='Username' component={TextField} error={errors.username} />
+            <Field name='w' type='text' label='Username' component={TextField} />
           </Box>
           <Box margin={1}>
             <Field name='password' type='password' label='Password' component={TextField} />

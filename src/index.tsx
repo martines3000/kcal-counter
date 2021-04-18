@@ -6,17 +6,20 @@ import reportWebVitals from './reportWebVitals';
 import ThemeProvider from './contexts/ThemeContext';
 import AuthProvider from './contexts/AuthContext';
 import { CssBaseline } from '@material-ui/core';
-import PublicFoodProvider from './contexts/PublicFoodContext';
+import FoodProvider from './contexts/FoodContext';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 ReactDOM.render(
-  <ThemeProvider>
-    <PublicFoodProvider>
-      <AuthProvider>
-        <CssBaseline />
-        <App />
-      </AuthProvider>
-    </PublicFoodProvider>
-  </ThemeProvider>,
+  <Router basename={process.env.PUBLIC_URL}>
+    <ThemeProvider>
+      <FoodProvider>
+        <AuthProvider>
+          <CssBaseline />
+          <App />
+        </AuthProvider>
+      </FoodProvider>
+    </ThemeProvider>
+  </Router>,
   document.getElementById('root'),
 );
 

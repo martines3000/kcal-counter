@@ -36,7 +36,7 @@ const oats: Food = {
   id: '5',
   name: 'Ovseni kosmiči',
   kcal: 389,
-  foodType: 'CARB',
+  foodType: 'CARBS',
   owner: 'id-martin',
 };
 

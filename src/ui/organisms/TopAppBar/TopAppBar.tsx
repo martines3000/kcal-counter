@@ -12,6 +12,7 @@ export type TopAppBarProps = {
   handleLogoClick: () => void;
   handleProfileClick: () => void;
   handleFoodClick: () => void;
+  handleIntakeClick: () => void;
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -43,6 +44,7 @@ const TopAppBar = ({
   handleLogoClick,
   handleProfileClick,
   handleFoodClick,
+  handleIntakeClick,
 }: TopAppBarProps): JSX.Element => {
   const classes = useStyles();
 
@@ -57,6 +59,9 @@ const TopAppBar = ({
         </Typography>
         <Button variant='text' color='inherit' onClick={handleFoodClick}>
           Food
+        </Button>
+        <Button variant='text' color='inherit' onClick={handleIntakeClick}>
+          Intake
         </Button>
         <div className={classes.filler} />
         <Switch className={classes.switchToggle} checked={type === 'light'} onChange={toggleTheme} />

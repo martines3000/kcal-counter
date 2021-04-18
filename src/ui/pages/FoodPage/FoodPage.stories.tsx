@@ -1,7 +1,7 @@
 import React from 'react';
 import { Story } from '@storybook/react';
 
-import Food from './Food';
+import Food from './FoodPage';
 
 export default {
   component: Food,
