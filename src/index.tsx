@@ -7,10 +7,10 @@ import ThemeProvider from './contexts/ThemeContext';
 import AuthProvider from './contexts/AuthContext';
 import { CssBaseline } from '@material-ui/core';
 import FoodProvider from './contexts/FoodContext';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { HashRouter as Router } from 'react-router-dom';
 
 ReactDOM.render(
-  <Router basename={process.env.PUBLIC_URL}>
+  <Router>
     <ThemeProvider>
       <FoodProvider>
         <AuthProvider>
