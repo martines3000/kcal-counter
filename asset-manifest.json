@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/martines3000.github.io/kcal-counter/static/css/main.9f31a381.chunk.css",
-    "main.js": "/martines3000.github.io/kcal-counter/static/js/main.8d38cabd.chunk.js",
-    "main.js.map": "/martines3000.github.io/kcal-counter/static/js/main.8d38cabd.chunk.js.map",
-    "runtime-main.js": "/martines3000.github.io/kcal-counter/static/js/runtime-main.41373fa8.js",
-    "runtime-main.js.map": "/martines3000.github.io/kcal-counter/static/js/runtime-main.41373fa8.js.map",
-    "static/js/2.b69c78cc.chunk.js": "/martines3000.github.io/kcal-counter/static/js/2.b69c78cc.chunk.js",
-    "static/js/2.b69c78cc.chunk.js.map": "/martines3000.github.io/kcal-counter/static/js/2.b69c78cc.chunk.js.map",
-    "static/js/3.ea421d27.chunk.js": "/martines3000.github.io/kcal-counter/static/js/3.ea421d27.chunk.js",
-    "static/js/3.ea421d27.chunk.js.map": "/martines3000.github.io/kcal-counter/static/js/3.ea421d27.chunk.js.map",
-    "index.html": "/martines3000.github.io/kcal-counter/index.html",
-    "static/css/main.9f31a381.chunk.css.map": "/martines3000.github.io/kcal-counter/static/css/main.9f31a381.chunk.css.map",
-    "static/js/2.b69c78cc.chunk.js.LICENSE.txt": "/martines3000.github.io/kcal-counter/static/js/2.b69c78cc.chunk.js.LICENSE.txt"
+    "main.css": "/kcal-counter/static/css/main.9f31a381.chunk.css",
+    "main.js": "/kcal-counter/static/js/main.79fc62c8.chunk.js",
+    "main.js.map": "/kcal-counter/static/js/main.79fc62c8.chunk.js.map",
+    "runtime-main.js": "/kcal-counter/static/js/runtime-main.85a732fe.js",
+    "runtime-main.js.map": "/kcal-counter/static/js/runtime-main.85a732fe.js.map",
+    "static/js/2.0108cca3.chunk.js": "/kcal-counter/static/js/2.0108cca3.chunk.js",
+    "static/js/2.0108cca3.chunk.js.map": "/kcal-counter/static/js/2.0108cca3.chunk.js.map",
+    "static/js/3.ea421d27.chunk.js": "/kcal-counter/static/js/3.ea421d27.chunk.js",
+    "static/js/3.ea421d27.chunk.js.map": "/kcal-counter/static/js/3.ea421d27.chunk.js.map",
+    "index.html": "/kcal-counter/index.html",
+    "static/css/main.9f31a381.chunk.css.map": "/kcal-counter/static/css/main.9f31a381.chunk.css.map",
+    "static/js/2.0108cca3.chunk.js.LICENSE.txt": "/kcal-counter/static/js/2.0108cca3.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.41373fa8.js",
-    "static/js/2.b69c78cc.chunk.js",
+    "static/js/runtime-main.85a732fe.js",
+    "static/js/2.0108cca3.chunk.js",
     "static/css/main.9f31a381.chunk.css",
-    "static/js/main.8d38cabd.chunk.js"
+    "static/js/main.79fc62c8.chunk.js"
   ]
 }
