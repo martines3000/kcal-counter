@@ -17,7 +17,7 @@ function App(): JSX.Element {
 
   return (
     <Switch>
-      <Route path='/' exact component={LandingPage} />
+      <Route exact path='/' component={LandingPage} />
       <PrivateRoute path='/dashboard'>
         <Navbar />
         <Dashboard />
