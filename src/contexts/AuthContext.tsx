@@ -20,8 +20,11 @@ type IRegister = {
 };
 
 type ILogin = {
-  username: string;
-  password: string;
+  loginInfo: {
+    username: string;
+    password: string;
+  };
+  save: boolean;
 };
 
 type Permission = 'PROFILE_PERMISSION' | 'PERSONAL_FOODS_PERMISSION';
@@ -96,11 +99,12 @@ const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
         setLoading(false);
       });
   }
-  function login(data: ILogin): void {
+  function login({ loginInfo, save }: ILogin): void {
     setLoading(true);
-    axios({ method: 'post', url: `${API_ADDRESS}/authenticate`, data: data })
+    axios({ method: 'post', url: `${API_ADDRESS}/authenticate`, data: loginInfo })
       .then((res) => {
         const { id, name, permissions, token, username } = res.data;
+        if (save) localStorage.setItem('username', username);
         localStorage.setItem('token', token);
         setCurrentUser({
           id: id,

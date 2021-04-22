@@ -7,6 +7,9 @@ export type Food = {
   kcal: number;
   owner: string | null;
   foodType?: FoodType;
+  carbs: number;
+  proteins: number;
+  fats: number;
 };
 
 export type IntakeFood = Food & {

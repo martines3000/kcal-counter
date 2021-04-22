@@ -6,6 +6,9 @@ export const kinderSurprise: Food = {
   kcal: 123,
   foodType: 'SWEETS',
   owner: 'id-martin',
+  carbs: 10,
+  proteins: 20,
+  fats: 5,
 };
 
 const chickenBreast: Food = {
@@ -14,6 +17,9 @@ const chickenBreast: Food = {
   kcal: 101,
   foodType: 'MEATS',
   owner: 'id-martin',
+  carbs: 10,
+  proteins: 20,
+  fats: 5,
 };
 
 const orange: Food = {
@@ -22,6 +28,9 @@ const orange: Food = {
   kcal: 38,
   foodType: 'FRUITS',
   owner: 'id-martin',
+  carbs: 10,
+  proteins: 20,
+  fats: 5,
 };
 
 const tomato: Food = {
@@ -30,6 +39,9 @@ const tomato: Food = {
   kcal: 68,
   foodType: 'VEGETABLES',
   owner: 'id-martin',
+  carbs: 10,
+  proteins: 20,
+  fats: 5,
 };
 
 const oats: Food = {
@@ -38,6 +50,9 @@ const oats: Food = {
   kcal: 389,
   foodType: 'CARBS',
   owner: 'id-martin',
+  carbs: 10,
+  proteins: 20,
+  fats: 5,
 };
 
 export const foodArray: Food[] = [kinderSurprise, chickenBreast, orange, tomato, oats];

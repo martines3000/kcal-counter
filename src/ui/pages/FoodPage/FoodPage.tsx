@@ -1,4 +1,4 @@
-import { Box, Button, Select, MenuItem } from '@material-ui/core';
+import { Box, Button, Select, MenuItem, makeStyles } from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { useFood } from '../../../contexts/FoodContext';
@@ -17,7 +17,14 @@ export const FoodSchema = Yup.object().shape({
   foodType: Yup.string().optional(),
 });
 
+const useStyles = makeStyles((theme) => ({
+  main: {
+    margin: theme.spacing(2, 8, 0),
+  },
+}));
+
 const FoodPage = (): JSX.Element => {
+  const classes = useStyles();
   const { publicFood, personalFood, createPersonalFood, loading, removePersonalFood, getFoodById } = useFood();
   const [create, setCreate] = useState(false);
   const [edit, setEdit] = useState(false);
@@ -39,7 +46,7 @@ const FoodPage = (): JSX.Element => {
   }, [checked]);
 
   return (
-    <>
+    <div className={classes.main}>
       {!edit && (
         <div>
           <ListFood foodArray={publicFood.concat(personalFood)} />
@@ -126,7 +133,7 @@ const FoodPage = (): JSX.Element => {
           )}
         </div>
       )}
-    </>
+    </div>
   );
 };
 

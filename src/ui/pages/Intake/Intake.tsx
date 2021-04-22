@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { format, parse } from 'date-fns';
-import { Button, Input } from '@material-ui/core';
+import { Button, Input, makeStyles, Typography } from '@material-ui/core';
 import ListIntake from '../../organisms/ListIntake/ListIntake';
 import { IntakeFood } from '../../../types';
 import { useFood } from '../../../contexts/FoodContext';
@@ -10,13 +10,33 @@ import { API_ADDRESS } from '../../../config';
 import axios from 'axios';
 import { useAuth } from '../../../contexts/AuthContext';
 
+const useStyles = makeStyles((theme) => ({
+  main: {
+    margin: theme.spacing(2, 8, 0),
+  },
+  inner: {
+    margin: theme.spacing(2, 0, 2),
+  },
+  addFood: {
+    margin: theme.spacing(0, 2, 0),
+  },
+}));
+
+type Macros = {
+  carbs: number;
+  proteins: number;
+  fats: number;
+};
+
 const Intake = (): JSX.Element => {
+  const classes = useStyles();
   function formatDate(dateString: string): string {
     return format(parse(dateString, 'yyyy-MM-dd', new Date()), 'd/M/yyyy');
   }
 
   const [intake, setIntake] = useState<IntakeFood[]>([]);
   const [totalKcal, setTotalKcal] = useState<number>(0);
+  const [macros, setMacros] = useState<Macros>({ carbs: 0, proteins: 0, fats: 0 });
   const [date, setDate] = useState<string>(format(Date.now(), 'yyyy-MM-dd'));
   const { loading, error, setLoading, setError } = useApiState();
   const [addFood, setAddFood] = useState(false);
@@ -25,10 +45,16 @@ const Intake = (): JSX.Element => {
   const [checked, setChecked] = useState<string[]>([]);
 
   function getIntake(): void {
+    setIntake([]);
     setLoading(true);
     axios({ method: 'get', url: `${API_ADDRESS}/intake/${formatDate(date)}`, headers: { Authorization: `Bearer ${currentUser.token}` } })
       .then((res) => {
-        setIntake(res.data);
+        for (let i = 0; i < res.data.length; ++i) {
+          const foundFood = getFoodById(res.data[i].foodId);
+          if (foundFood !== null) {
+            setIntake((prevState) => [...prevState, { ...foundFood, id: res.data[i].id, foodId: res.data[i].foodId }]);
+          }
+        }
       })
       .catch((err) => {
         if (err.response) {
@@ -47,6 +73,18 @@ const Intake = (): JSX.Element => {
     });
 
     setTotalKcal(counter);
+  }
+
+  function calcMacros(): void {
+    const macroCounter: Macros = { carbs: 0, proteins: 0, fats: 0 };
+
+    intake.forEach((intakeEle) => {
+      macroCounter.carbs += intakeEle.carbs;
+      macroCounter.proteins += intakeEle.proteins;
+      macroCounter.fats += intakeEle.fats;
+    });
+
+    setMacros(macroCounter);
   }
 
   function addChecked(): void {
@@ -81,25 +119,29 @@ const Intake = (): JSX.Element => {
 
   useEffect(() => {
     calcTotal();
+    calcMacros();
   }, [intake]);
 
   return (
-    <>
+    <div className={classes.main}>
       {!addFood && (
         <div>
           <div>
-            <Input
-              type='date'
-              value={date}
-              onChange={(e) => {
-                setDate(e.target.value);
-              }}
-            />
-            <div>Todal calories: {totalKcal}</div>
-            {intake.length === 0 && <div>No intake for this day has been found!</div>}
-            <Button variant='contained' color='primary' onClick={() => setAddFood(true)}>
-              Add food
-            </Button>
+            <Typography variant='h5'>Total calories: {totalKcal}</Typography>
+            <Typography variant='h5'>{`Carbs: ${macros.carbs} Protein: ${macros.proteins} Fat: ${macros.fats}`}</Typography>
+            <div className={classes.inner}>
+              <Input
+                type='date'
+                value={date}
+                onChange={(e) => {
+                  setDate(e.target.value);
+                }}
+              />
+              <Button variant='contained' color='primary' onClick={() => setAddFood(true)} className={classes.addFood}>
+                Add food
+              </Button>
+            </div>
+            {intake.length === 0 && <Typography variant='h5'>No intake for this day has been found!</Typography>}
           </div>
           <ListIntake foodArray={intake} />
         </div>
@@ -112,7 +154,7 @@ const Intake = (): JSX.Element => {
           </Button>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

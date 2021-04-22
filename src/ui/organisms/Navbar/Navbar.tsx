@@ -4,11 +4,13 @@ import { useThemeUpdate } from '../../../contexts/ThemeContext';
 import { useTheme } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import TopAppBar from '../TopAppBar/TopAppBar';
+import { useStyles } from '../../../App';
 
 const Navbar = (): JSX.Element => {
   const history = useHistory();
   const { logout, loading } = useAuth();
   const toggleTheme = useThemeUpdate();
+
   const {
     palette: { type },
   } = useTheme();
